@@ -40,12 +40,21 @@ namespace APIConsume.Controllers
                     
                     MemoryStream stream = new MemoryStream(byteArray);
 
+
                     reservationList = (Reservation)deserializer.ReadObject(stream);
-                    
+
+                    foreach (var val in json.Last.First)
+                    {
+                        reservationList.rates.Add(val.ToString());
+                    }
+
+
                 }
             }
             return View(reservationList);
         }
+
+
 
         
 

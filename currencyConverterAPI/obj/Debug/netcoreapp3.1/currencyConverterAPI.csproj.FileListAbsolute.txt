@@ -22,13 +22,6 @@ E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcore
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.TagHelpers.input.cache
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.TagHelpers.output.cache
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.RazorCoreGenerate.cache
-E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Pages\Error.cshtml.g.cs
-E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Pages\Index.cshtml.g.cs
-E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Pages\Privacy.cshtml.g.cs
-E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_Layout.cshtml.g.cs
-E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_ValidationScriptsPartial.cshtml.g.cs
-E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Pages\_ViewImports.cshtml.g.cs
-E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Pages\_ViewStart.cshtml.g.cs
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.RazorTargetAssemblyInfo.cache
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.RazorTargetAssemblyInfo.cs
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.Views.pdb
@@ -36,3 +29,8 @@ E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcore
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.pdb
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.genruntimeconfig.cache
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.csproj.CopyComplete
+E:\Interview Program\currencyConverterAPI\currencyConverterAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Views\Start\Index.cshtml.g.cs
+E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs

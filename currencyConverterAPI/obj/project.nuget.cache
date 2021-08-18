@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "MNmhDKTigEtVddFgdztXuNq/4Sa7NWyqN735SmJoSrQYzWyEruTwQeL6/yPijuJViBVokGFVE11/Jn0RKuax/Q==",
+  "dgSpecHash": "cJYDYxxh26zlofHlEidKcIlnmBYUY7Lwc2OBMLH5MvlQNlMhS9WNy/XGm2JN/IZIMIBPXTyr5jekJt9c//GEew==",
   "success": true,
   "projectFilePath": "E:\\Interview Program\\currencyConverterAPI\\currencyConverterAPI\\currencyConverterAPI.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\David Cachia\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

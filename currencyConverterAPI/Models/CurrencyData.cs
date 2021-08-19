@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace  APIConsume.Models
 {
-    public class Reservation
+    public class CurrencyData
     {
         public bool success { get; set; }        
         public string timestamp { get; set; }                

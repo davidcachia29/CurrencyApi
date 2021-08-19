@@ -13,52 +13,24 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Runtime.Serialization.Json;
+using currencyConverterAPI.Interfaces;
+using currencyConverterAPI;
 
 namespace APIConsume.Controllers
 {
     public class HomeController : Controller
+
     {
-
-        string apiResponse;
-        //JObject json;
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            Reservation reservationList = new Reservation ();
-
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync("http://api.exchangeratesapi.io/v1/latest?access_key=24398c31c37c2d91d8afd8153e00160e&format=1"))
-                {
-
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    JObject json = JObject.Parse(apiResponse);
-
-                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Reservation));
-
-                    byte[] byteArray = Encoding.UTF8.GetBytes(apiResponse);
-                    
-                    MemoryStream stream = new MemoryStream(byteArray);
+            ICurrencyData data = new Data();            
 
 
-                    reservationList = (Reservation)deserializer.ReadObject(stream);
-
-                    foreach (var val in json.Last.First)
-                    {
-                        reservationList.rates.Add(val.ToString());
-                    }
-
-
-                }
-            }
-            return View(reservationList);
+            return View(await data.DisplayDataAsync());
         }
-
-
-
-        
-
-        public ViewResult GetReservation() => View();
-        
     }
 }
+
+
+
+        

@@ -23,10 +23,12 @@ namespace APIConsume.Controllers
     {
         public async Task<IActionResult> IndexAsync()
         {
-            ICurrencyData data = new Data();            
+            ICurrencyData data = new Data();
 
 
-            return View(await data.DisplayDataAsync());
+            return View(await data.DisplayTargetDataAsync("BLABLA"));
+           
+            
         }
     }
 }

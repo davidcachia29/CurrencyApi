@@ -16,6 +16,7 @@ namespace currencyConverterAPI
     public class Data : ICurrencyData
     {
         public CurrencyData reservationList;
+
         public async Task<CurrencyData> DisplayDataAsync()
         {
             reservationList = new CurrencyData();
@@ -46,6 +47,46 @@ namespace currencyConverterAPI
                 }
             }           
             return (reservationList);
-        }                
+        }
+
+       public async Task<CurrencyData> DisplayTargetDataAsync(string target)
+        {
+            reservationList = new CurrencyData();
+
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("http://api.coinlayer.com/live?access_key=3a43ae208c4307f5f8d0a7a911aebd12&target=" + target))
+                {
+
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    JObject json = JObject.Parse(apiResponse);
+
+                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CurrencyData));
+
+                    byte[] byteArray = Encoding.UTF8.GetBytes(apiResponse);
+
+                    MemoryStream stream = new MemoryStream(byteArray);
+
+
+                    reservationList = (CurrencyData)deserializer.ReadObject(stream);
+
+                    foreach (var val in json.Last.First)
+                    {
+                        if (json.First.ToString().Contains("false"))
+                        {
+                            return (reservationList);
+                        }
+                        else
+                        {
+                            reservationList.rates.Add(val.ToString());
+                        }
+                        
+                    }
+
+
+                }
+            }
+            return (reservationList);
+        }
     }
 }

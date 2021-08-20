@@ -10,5 +10,6 @@ namespace currencyConverterAPI.Interfaces
     public interface ICurrencyData
     {
         Task<CurrencyData> DisplayDataAsync();
+        Task<CurrencyData> DisplayTargetDataAsync(string target);
     }
 }

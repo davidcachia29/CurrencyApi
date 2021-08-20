@@ -21,10 +21,19 @@
             <td>@Model.date</td>
             <td>@(Model.@base)</td>
 
-            @foreach (var r in Model.rates)
+            @if (Model.rates == null)
             {
-                <td>@r</td>
+                <td>Error</td>
             }
+            else
+            {
+                foreach (var r in Model.rates)
+                {
+                    <td>@r</td>
+                }
+            }
+
+
 
         </tr>
         

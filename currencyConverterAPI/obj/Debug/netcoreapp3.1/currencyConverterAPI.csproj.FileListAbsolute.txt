@@ -44,3 +44,6 @@ E:\Interview Program\currencyConverterAPI\currencyConverterAPI\bin\Debug\netcore
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\currencyConverterAPI.MvcApplicationPartsAssemblyInfo.cs
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
 E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Views\Home\Error.cshtml.g.cs
+E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Views\Home\GetData.cshtml.g.cs
+E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Views\Home\GetTargetData.cshtml.g.cs
+E:\Interview Program\currencyConverterAPI\currencyConverterAPI\obj\Debug\netcoreapp3.1\Razor\Views\Home\GetConvertData.cshtml.g.cs

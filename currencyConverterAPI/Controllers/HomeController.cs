@@ -21,14 +21,30 @@ namespace APIConsume.Controllers
     public class HomeController : Controller
 
     {
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> GetData()
         {
             ICurrencyData data = new Data();
 
+            return View(await data.DisplayDataAsync());
+        }
 
-            return View(await data.DisplayTargetDataAsync("BLABLA"));
-           
+        public async Task<IActionResult> GetTargetData(string Target)
+        {
+            ICurrencyData data = new Data();
             
+            return View(await data.DisplayTargetDataAsync(Target));
+        }
+
+        public async Task<IActionResult> GetConvertData(string from, string to, int amount)
+        {
+            ICurrencyData data = new Data();
+
+            return View(await data.ConvertDataAsync(from, to, amount));
         }
     }
 }

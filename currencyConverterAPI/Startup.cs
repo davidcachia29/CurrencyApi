@@ -34,7 +34,7 @@ namespace currencyConverterAPI
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("http://api.exchangeratesapi.io/v1/latest?access_key=24398c31c37c2d91d8afd8153e00160e&format=1" , "Test API");                
+                c.SwaggerEndpoint("https://api.exchangeratesapi.io/v1/latest?access_key=24398c31c37c2d91d8afd8153e00160e&format=1", "Test API");                
             });
 
             if (env.IsDevelopment())

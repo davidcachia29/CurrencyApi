@@ -22,12 +22,13 @@ namespace currencyConverterAPI
         {
             reservationList = new CurrencyData();
 
+            //Can automaticly get result but following requirements and calculating it manually
             //string url = "http://api.exchangeratesapi.io/v1/convert?access_key=24398c31c37c2d91d8afd8153e00160e&from="+ from + "&to="+ to +"&amount=" + amount;
+
+
             string url = "http://api.exchangeratesapi.io/v1/latest?access_key=24398c31c37c2d91d8afd8153e00160e&symbols=" + to + "&Base=" + from + "&format=1";
 
-            string To;
-            string From;
-
+            
             IEnumerable<KeyValuePair<string, string>> queries = new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("From", from),
@@ -35,9 +36,7 @@ namespace currencyConverterAPI
                     new KeyValuePair<string, string>("Amount", amount.ToString())
                 };
 
-            HttpContent q = new FormUrlEncodedContent(queries);
-
-            string[] dataNeeded;
+            HttpContent q = new FormUrlEncodedContent(queries);           
 
             using (HttpClient client = new HttpClient())
             {
@@ -58,10 +57,28 @@ namespace currencyConverterAPI
                         reservationList = (CurrencyData)deserializer.ReadObject(stream);
 
                         foreach (var val in json.Last.First)
-                        {                            
-                            float total = (float)val.Last;
-                            
-                            reservationList.result = (amount * total).ToString();                                           
+                        {
+                            if (json.First.ToString().Contains("invalid"))
+                            {
+                                reservationList.result = "Invalid Currency";
+                                return (reservationList);
+                            }
+                            else
+                            {
+                                float total = (float)val.Last;
+
+                                if (amount.ToString() == "0")
+                                {
+                                    reservationList.result = "Amount Left Empty Or 0";
+                                    return (reservationList);
+                                }
+                                else
+                                {
+                                    reservationList.result = (amount * total).ToString();
+                                }
+                               
+                            }
+                                                                 
                         }
                     }
                 }
@@ -135,6 +152,50 @@ namespace currencyConverterAPI
                             reservationList.rates.Add(val.ToString());
                         }
                         
+                    }
+
+
+                }
+            }
+            return (reservationList);
+        }
+
+       public async Task<CurrencyData> ConvertDateAsync(int days)
+        {
+            reservationList = new CurrencyData();
+
+            DateTime thisDay = DateTime.Today;
+
+            string date = thisDay.Day.ToString() + "/" + thisDay.Month.ToString() + "/" + thisDay.Year.ToString();
+
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://api.exchangeratesapi.io/v1/" + date + "?access_key=24398c31c37c2d91d8afd8153e00160e&base=EUR"))
+                {
+
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    JObject json = JObject.Parse(apiResponse);
+
+                    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CurrencyData));
+
+                    byte[] byteArray = Encoding.UTF8.GetBytes(apiResponse);
+
+                    MemoryStream stream = new MemoryStream(byteArray);
+
+
+                    reservationList = (CurrencyData)deserializer.ReadObject(stream);
+
+                    foreach (var val in json.Last.First)
+                    {
+                        if (json.First.ToString().Contains("false"))
+                        {
+                            return (reservationList);
+                        }
+                        else
+                        {
+                            reservationList.rates.Add(val.ToString());
+                        }
+
                     }
 
 

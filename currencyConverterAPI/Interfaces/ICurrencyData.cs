@@ -12,5 +12,6 @@ namespace currencyConverterAPI.Interfaces
         Task<CurrencyData> DisplayDataAsync();
         Task<CurrencyData> DisplayTargetDataAsync(string target);
         Task<CurrencyData> ConvertDataAsync(string from, string to, float amount);
+        Task<CurrencyData> ConvertDateAsync(int date);
     }
 }

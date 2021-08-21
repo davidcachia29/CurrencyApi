@@ -40,11 +40,18 @@ namespace APIConsume.Controllers
             return View(await data.DisplayTargetDataAsync(Target));
         }
 
-        public async Task<IActionResult> GetConvertData(string from, string to, int amount)
+        public async Task<IActionResult> GetConvertData(string from, string to, float amount)
         {
             ICurrencyData data = new Data();
 
             return View(await data.ConvertDataAsync(from, to, amount));
+        }
+
+        public async Task<IActionResult> GetConvertDate(int date)
+        {
+            ICurrencyData data = new Data();
+
+            return View(await data.ConvertDateAsync(date));
         }
     }
 }

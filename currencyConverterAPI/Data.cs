@@ -18,7 +18,7 @@ namespace currencyConverterAPI
     {
         public CurrencyData reservationList;
 
-        public async Task<CurrencyData> ConvertDataAsync(string from, string to, int amount)
+        public async Task<CurrencyData> ConvertDataAsync(string from, string to, float amount)
         {
             reservationList = new CurrencyData();
 
@@ -58,8 +58,10 @@ namespace currencyConverterAPI
                         reservationList = (CurrencyData)deserializer.ReadObject(stream);
 
                         foreach (var val in json.Last.First)
-                        {
-                            reservationList.rates.Add(val.ToString());
+                        {                            
+                            float total = (float)val.Last;
+                            
+                            reservationList.result = (amount * total).ToString();                                           
                         }
                     }
                 }

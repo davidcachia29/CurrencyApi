@@ -16,90 +16,96 @@ namespace currencyConverterAPI
 {
     public class Data : ICurrencyData
     {
-        public CurrencyData reservationList;       
+        public CurrencyData finalData;       
 
+        //Task 1 To display basic data
         public async Task<CurrencyData> DisplayDataAsync()
         {
-            reservationList = new CurrencyData();
+            finalData = new CurrencyData();
             
+            //Using the HTTP Client
             using (var httpClient = new HttpClient())
             {
+                //Setting the api link
                 using (var response = await httpClient.GetAsync("https://api.exchangeratesapi.io/v1/latest?access_key=24398c31c37c2d91d8afd8153e00160e&format=1"))
                 {
-
+                    //Method to deserialise the json response of the api
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     JObject json = JObject.Parse(apiResponse);
-
                     DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CurrencyData));
-
                     byte[] byteArray = Encoding.UTF8.GetBytes(apiResponse);
-
                     MemoryStream stream = new MemoryStream(byteArray);
 
+                    //The Final deserialised data
+                    finalData = (CurrencyData)deserializer.ReadObject(stream);
 
-                    reservationList = (CurrencyData)deserializer.ReadObject(stream);
-
+                    //Looping through all the data to save the results individualy
                     foreach (var val in json.Last.First)
                     {
-                        reservationList.rates.Add(val.ToString());
+                        finalData.rates.Add(val.ToString());
                     }
 
 
                 }
-            }           
-            return (reservationList);
+            }     
+            //Return the final data
+            return (finalData);
         }
+        //Task 2 To display data with a chosen target
         public async Task<CurrencyData> DisplayTargetDataAsync(string target)
         {
-            reservationList = new CurrencyData();
+            finalData = new CurrencyData();
 
+            //Using the HTTP Client
             using (var httpClient = new HttpClient())
             {
+                //Setting the api link
                 using (var response = await httpClient.GetAsync("http://api.exchangeratesapi.io/v1/latest?access_key=24398c31c37c2d91d8afd8153e00160e&format=1&Base=" + target))
                 {
-
+                    //Method to deserialise the json response of the api
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     JObject json = JObject.Parse(apiResponse);
-
                     DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CurrencyData));
-
                     byte[] byteArray = Encoding.UTF8.GetBytes(apiResponse);
-
                     MemoryStream stream = new MemoryStream(byteArray);
 
+                    //The Final deserialised data
+                    finalData = (CurrencyData)deserializer.ReadObject(stream);
+                    //Populating the "target" data
+                    finalData.@base = target;                    
 
-                    reservationList = (CurrencyData)deserializer.ReadObject(stream);
-                    reservationList.@base = target;                    
-
+                    //Checking if the data returned is not an error
                     foreach (var val in json.Last.First)
                     {
-                        if (json.First.ToString().Contains("false"))
+                        //Return final data which contains error
+                        if (json.First.ToString().Contains("error"))
                         {
-                            return (reservationList);
+                            return (finalData);
                         }
                         else
+                        //Add the data
                         {
-                            reservationList.rates.Add(val.ToString());
-                        }
-                        
+                            finalData.rates.Add(val.ToString());
+                        }                        
                     }
-
-
                 }
             }
-            return (reservationList);
+            //Return the data to the view
+            return (finalData);
         }
+        //Task 3 To display the result of two currencies
         public async Task<CurrencyData> ConvertDataAsync(string from, string to, float amount)
         {
-            reservationList = new CurrencyData();
+
+            finalData = new CurrencyData();
 
             //Can automaticly get result but following requirements and calculating it manually
             //string url = "http://api.exchangeratesapi.io/v1/convert?access_key=24398c31c37c2d91d8afd8153e00160e&from="+ from + "&to="+ to +"&amount=" + amount;
 
-
+            //Setting the Api
             string url = "http://api.exchangeratesapi.io/v1/latest?access_key=24398c31c37c2d91d8afd8153e00160e&symbols=" + to + "&Base=" + from + "&format=1";
 
-
+            //Setting the values for the HTTP Post
             IEnumerable<KeyValuePair<string, string>> queries = new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("From", from),
@@ -107,67 +113,73 @@ namespace currencyConverterAPI
                     new KeyValuePair<string, string>("Amount", amount.ToString())
                 };
 
+            //^ Setting the Encoded Content with the valuse created above ^
             HttpContent q = new FormUrlEncodedContent(queries);
 
+            //Using the HTTP Client
             using (HttpClient client = new HttpClient())
             {
+                //Using PostRequest
                 using (HttpResponseMessage response = await client.PostAsync(url, q))
                 {
                     using (HttpContent content = response.Content)
                     {
+                        //Method to deserialise the json response of the api
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         JObject json = JObject.Parse(apiResponse);
-
                         DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CurrencyData));
-
                         byte[] byteArray = Encoding.UTF8.GetBytes(apiResponse);
-
                         MemoryStream stream = new MemoryStream(byteArray);
 
+                        //The Final deserialised data
+                        finalData = (CurrencyData)deserializer.ReadObject(stream);
+                        //Showing the converstion
+                        finalData.@base = "From " + from + " To " + to;
 
-                        reservationList = (CurrencyData)deserializer.ReadObject(stream);
-
+                        //Error Proofing the Results
                         foreach (var val in json.Last.First)
                         {
                             if (json.First.ToString().Contains("invalid"))
                             {
-                                reservationList.result = "Invalid Currency";
-                                return (reservationList);
+                                //Showing data inputed is incorrect
+                                finalData.result = "Invalid Currency";
+                                return (finalData);
                             }
                             else
                             {
                                 float total = (float)val.Last;
 
+                                //Showing that data is left out
                                 if (amount.ToString() == "0")
                                 {
-                                    reservationList.result = "Amount Left Empty Or 0";
-                                    return (reservationList);
+                                    finalData.result = "Amount Left Empty Or 0";
+                                    return (finalData);
                                 }
+                                //If everything is inputed correctly
                                 else
                                 {
-                                    reservationList.result = (amount * total).ToString();
+                                    //Add correct data
+                                    finalData.result = (amount * total).ToString();
                                 }
-
                             }
-
                         }
                     }
                 }
-                return (reservationList);
+                //Return Data To View
+                return (finalData);
             }
-
         }
+        //Task 4 To display the data of x days ago
         public async Task<CurrencyData> ConvertDateAsync(int days)
-        {
-            reservationList = new CurrencyData();
+        {            
+            finalData = new CurrencyData();
 
+            //Setting The Date Variable
             DateTime thisDay = DateTime.Today;
-
             DateTime reducedDate = DateTime.Now.AddDays(-days);
-
             string month , day;
 
-
+            //Making the data returned readable by the Api By adding a dd-mm-yyyy Format
             if (reducedDate.Month <= 9)
             {
                 month = "0" + reducedDate.Month.ToString();
@@ -176,8 +188,6 @@ namespace currencyConverterAPI
             {
                 month = reducedDate.Month.ToString();
             }
-
-
             if (reducedDate.Day <= 9)
             {
                 day = "0" + reducedDate.Day.ToString();
@@ -187,39 +197,44 @@ namespace currencyConverterAPI
                 day = reducedDate.Day.ToString();
             }
 
+            //Saving the correct reduced date
             string date = reducedDate.Year.ToString() + "-" + month + "-" + day  ;
 
+            //Using the HTTP Client
             using (var httpClient = new HttpClient())
             {
+                //Setting the api link
                 using (var response = await httpClient.GetAsync("https://api.exchangeratesapi.io/v1/" + date + "?access_key=24398c31c37c2d91d8afd8153e00160e&base=EUR"))
                 {
-
+                    //Method to deserialise the json response of the api
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     JObject json = JObject.Parse(apiResponse);
-
                     DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(CurrencyData));
-
                     byte[] byteArray = Encoding.UTF8.GetBytes(apiResponse);
-
                     MemoryStream stream = new MemoryStream(byteArray);
 
+                    //The Final deserialised data
+                    finalData = (CurrencyData)deserializer.ReadObject(stream);
 
-                    reservationList = (CurrencyData)deserializer.ReadObject(stream);
-
+                    //Making data error proof
                     foreach (var val in json.Last.First)
                     {
+                        //If data shows error
                         if (json.First.ToString().Contains("false"))
                         {
-                            return (reservationList);
+                            //Show that an error occured
+                            return (finalData);
                         }
                         else
                         {
-                            reservationList.rates.Add(val.ToString());
+                            //Add the data
+                            finalData.rates.Add(val.ToString());
                         }
                     }
                 }
             }
-            return (reservationList);
+            //Return The data to the view
+            return (finalData);
         }
     }
 }

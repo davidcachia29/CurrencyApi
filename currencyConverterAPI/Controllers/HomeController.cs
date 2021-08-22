@@ -26,6 +26,7 @@ namespace APIConsume.Controllers
             return View();
         }
 
+        //Task 1
         public async Task<IActionResult> GetData()
         {
             ICurrencyData data = new Data();
@@ -33,6 +34,7 @@ namespace APIConsume.Controllers
             return View(await data.DisplayDataAsync());
         }
 
+        //Task 2
         public async Task<IActionResult> GetTargetData(string Target)
         {
             ICurrencyData data = new Data();
@@ -40,6 +42,7 @@ namespace APIConsume.Controllers
             return View(await data.DisplayTargetDataAsync(Target));
         }
 
+        //Task 3
         public async Task<IActionResult> GetConvertData(string from, string to, float amount)
         {
             ICurrencyData data = new Data();
@@ -47,6 +50,7 @@ namespace APIConsume.Controllers
             return View(await data.ConvertDataAsync(from, to, amount));
         }
 
+        //Task 4
         public async Task<IActionResult> GetConvertDate(int date)
         {
             ICurrencyData data = new Data();

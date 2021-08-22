@@ -15,8 +15,5 @@ namespace  APIConsume.Models
         public string date { get; set; }        
         public List<String> rates { get; set; }
         public string result { get; set; }
-        
-
-
     }
 }

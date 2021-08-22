@@ -2,7 +2,7 @@
 @{ Layout = "_Layout"; ViewBag.Title = "All Reservations";}
 
 <h2>Currency Converter API</h2>
-<h2>Getting Basic Data</h2>
+<h2>Getting Data With Chosen Base</h2>
 <br />
 <br />
 <table class="table table-sm table-striped table-bordered m-2">
@@ -12,8 +12,6 @@
             <th>TimeStamp</th>
             <th>Date</th>
             <th>Base</th>
-            <th>Rates</th>
-
         </tr>
     </thead>
     <tbody>
@@ -22,22 +20,25 @@
             <td>@Model.timestamp</td>
             <td>@Model.date</td>
             <td>@(Model.@base)</td>
-
-            @if (Model.rates == null)
-            {
-                <td>Error</td>
-            }
-            else
-            {
-                foreach (var r in Model.rates)
-                {
-                    <td>@r</td>
-                }
-            }
-
-
-
         </tr>
 
     </tbody>
 </table>
+<br />
+<br />
+<br />
+
+@if (Model.rates == null)
+{
+    <td>Error</td>
+}
+else
+{
+    foreach (var r in Model.rates)
+    {
+        <li>@r</li>
+    }
+}
+
+
+

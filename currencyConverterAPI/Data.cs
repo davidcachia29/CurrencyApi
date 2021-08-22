@@ -166,7 +166,31 @@ namespace currencyConverterAPI
 
             DateTime thisDay = DateTime.Today;
 
-            string date = thisDay.Day.ToString() + "/" + thisDay.Month.ToString() + "/" + thisDay.Year.ToString();
+            DateTime reducedDate = DateTime.Now.AddDays(-days);
+
+            string month , day;
+
+
+            if (reducedDate.Month <= 9)
+            {
+                month = "0" + reducedDate.Month.ToString();
+            }
+            else
+            {
+                month = reducedDate.Month.ToString();
+            }
+
+            if (reducedDate.Day <= 9)
+            {
+                day = "0" + reducedDate.Day.ToString();
+            }
+            else
+            {
+                day = reducedDate.Day.ToString();
+
+            }
+
+            string date = reducedDate.Year.ToString() + "-" + month + "-" + day  ;
 
             using (var httpClient = new HttpClient())
             {

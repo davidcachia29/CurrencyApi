@@ -21,6 +21,12 @@ namespace APIConsume.Controllers
     public class HomeController : Controller
 
     {
+        private ICurrencyData _currencyData;
+
+        public HomeController(ICurrencyData currencyData)
+        {
+            _currencyData = currencyData;
+        }
         public IActionResult Index()
         {
             return View();
@@ -29,33 +35,33 @@ namespace APIConsume.Controllers
         //Task 1
         public async Task<IActionResult> GetData()
         {
-            ICurrencyData data = new Data();
+           
 
-            return View(await data.DisplayDataAsync());
+            return View(await _currencyData.DisplayDataAsync());
         }
 
         //Task 2
         public async Task<IActionResult> GetTargetData(string Target)
         {
-            ICurrencyData data = new Data();
+           
             
-            return View(await data.DisplayTargetDataAsync(Target));
+            return View(await _currencyData.DisplayTargetDataAsync(Target));
         }
 
         //Task 3
         public async Task<IActionResult> GetConvertData(string from, string to, float amount)
         {
-            ICurrencyData data = new Data();
+            
 
-            return View(await data.ConvertDataAsync(from, to, amount));
+            return View(await _currencyData.ConvertDataAsync(from, to, amount));
         }
 
         //Task 4
         public async Task<IActionResult> GetConvertDate(int date)
         {
-            ICurrencyData data = new Data();
+            
 
-            return View(await data.ConvertDateAsync(date));
+            return View(await _currencyData.ConvertDateAsync(date));
         }
     }
 }

@@ -1,4 +1,5 @@
 using currencyConverterAPI.Interfaces;
+using currencyConverterAPI.Services;
 using FluentAssertions.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +25,8 @@ namespace currencyConverterAPI
             services.AddSwaggerGen();
             //services.ConfigureSwaggerGen();
 
-            services.AddSingleton<ICurrencyData, Data>();
+            //services.AddSingleton<ICurrencyData, Data>();
+            services.addMyData();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
